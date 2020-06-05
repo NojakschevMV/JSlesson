@@ -5,4 +5,4 @@ let deposit;
 let mission;
 let period;
 alert('Нажмите "ок"');
-console.log('Спасибо что нажали "ок"');
+console.log('Спасибо что нажали  "ок"');
