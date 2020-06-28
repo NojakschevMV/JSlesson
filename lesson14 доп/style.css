@@ -1,0 +1,20 @@
+.myInput{
+font-size: 25px;
+margin-bottom: 10px;
+}
+.myInput2{
+font-size: 25px;
+height: 100px;
+margin-bottom: 50px;
+}
+#myBtn{
+font-size: 30px; 
+padding: 10px; 
+margin-bottom: 10px;
+}
+.myInput3{
+    font-size: 25px;
+    height: 100px;
+    margin-bottom: 50px;
+    background-color: black;
+    }
