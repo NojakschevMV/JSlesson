@@ -61,9 +61,7 @@ window.addEventListener("DOMContentLoaded", function () {
   //Меню
   const toggleMenu = () => {
     const btnMenu = document.querySelector('.menu'),
-      menu = document.querySelector('menu'),
-      closeBtn = document.querySelector('.close-btn'), //крестик меню
-      menuItems = menu.querySelectorAll('ul>li'); // пункты меню
+      menu = document.querySelector('menu');
 
     const handlerMenu = () => { //открывает и закрывает меню
       // Пример взаимодействия с помощью классов
@@ -79,17 +77,17 @@ window.addEventListener("DOMContentLoaded", function () {
 
     };
 
-    btnMenu.addEventListener('click', (event) => { // 
+    btnMenu.addEventListener('click', (event) => {
       let target = event.target;
       target = target.closest('.menu');
-      if (target.classList.contains('menu')) { //
+      if (target.classList.contains('menu')) {
         handlerMenu();
       }
     });
-    menu.addEventListener('click', (event) => { // 
+    menu.addEventListener('click', (event) => {
       let target = event.target;
       target = target.closest('menu');
-      if (target.classList.contains('active-menu')) { //
+      if (target.classList.contains('active-menu')) {
         handlerMenu();
       }
 
