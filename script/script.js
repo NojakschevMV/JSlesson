@@ -23,7 +23,7 @@ window.addEventListener("DOMContentLoaded", function () {
         timeRemaining,
         hours,
         minutes,
-        seconds
+        seconds,
       };
     }
 
@@ -56,16 +56,17 @@ window.addEventListener("DOMContentLoaded", function () {
     }
     idTimer = setInterval(updateClock, 1000);
   }
-  countTimer("6 july 2020");
+  countTimer("9 july 2020");
 
   //Меню
   const toggleMenu = () => {
-    const btnMenu = document.querySelector('.menu'),
-      menu = document.querySelector('menu');
+    const btnMenu = document.querySelector(".menu"),
+      menu = document.querySelector("menu");
 
-    const handlerMenu = () => { //открывает и закрывает меню
+    const handlerMenu = () => {
+      //открывает и закрывает меню
       // Пример взаимодействия с помощью классов
-      menu.classList.toggle('active-menu'); // toggle - удалить/добавить класс
+      menu.classList.toggle("active-menu"); // toggle - удалить/добавить класс
 
       /* Пример взаимодействия с помощью стилей:
 
@@ -74,24 +75,21 @@ window.addEventListener("DOMContentLoaded", function () {
       }else{
         menu.style.transform = `translate(-100%)`;
       }*/
-
     };
 
-    btnMenu.addEventListener('click', (event) => {
+    btnMenu.addEventListener("click", (event) => {
       let target = event.target;
-      target = target.closest('.menu');
-      if (target.classList.contains('menu')) {
+      target = target.closest(".menu");
+      if (target.classList.contains("menu")) {
         handlerMenu();
       }
     });
-    menu.addEventListener('click', (event) => {
+    menu.addEventListener("click", (event) => {
       let target = event.target;
-      target = target.closest('menu');
-      if (target.classList.contains('active-menu')) {
+      target = target.closest("menu");
+      if (target.classList.contains("active-menu")) {
         handlerMenu();
       }
-
-
     });
   };
   toggleMenu();
@@ -99,9 +97,9 @@ window.addEventListener("DOMContentLoaded", function () {
   //popup открывающееся окно
 
   const togglePopup = () => {
-    const popup = document.querySelector('.popup'),
-      popupBtn = document.querySelectorAll('.popup-btn'),
-      popupContent = document.querySelector('.popup-content'),
+    const popup = document.querySelector(".popup"),
+      popupBtn = document.querySelectorAll(".popup-btn"),
+      popupContent = document.querySelector(".popup-content"),
       width = document.documentElement.clientWidth;
 
     let idAnimation;
@@ -110,14 +108,14 @@ window.addEventListener("DOMContentLoaded", function () {
       idAnimation = requestAnimationFrame(popupAnimation);
       count++;
       if (count < 40) {
-        popupContent.style.left = count + '%';
+        popupContent.style.left = count + "%";
       } else {
         cancelAnimationFrame(idAnimation);
       }
     };
 
     popupBtn.forEach((elem) => {
-      elem.addEventListener('click', () => {
+      elem.addEventListener("click", () => {
         popup.style.display = "block";
         if (width > 768) {
           idAnimation = requestAnimationFrame(popupAnimation);
@@ -125,57 +123,60 @@ window.addEventListener("DOMContentLoaded", function () {
       });
     });
 
-    popup.addEventListener('click', (event) => { // Если тыкнуть вне модального окна, оно закроется
+    popup.addEventListener("click", (event) => {
+      // Если тыкнуть вне модального окна, оно закроется
       let target = event.target;
-      if (target.classList.contains('popup-close')) { //Тыкая на крестик окно закроется
+      if (target.classList.contains("popup-close")) {
+        //Тыкая на крестик окно закроется
         popup.style.display = "none";
         if (width > 768) {
-          popupContent.style.left = 0 + 'px';
+          popupContent.style.left = 0 + "px";
           count = 0;
         }
       } else {
-        target = target.closest('.popup-content');
+        target = target.closest(".popup-content");
         /*Иначе тыкая в модальное окно мы будем получать '.popup-content', но
         если мы тыкнем вне окна то closest ненайдет '.popup-content' и вернет Null в target*/
         if (!target) {
           popup.style.display = "none";
-          popupContent.style.left = 0 + 'px';
+          popupContent.style.left = 0 + "px";
           count = 0;
         }
       }
     });
-
   };
   togglePopup();
 
   // Табы
 
   const tabs = () => {
-    const tabHeader = document.querySelector('.service-header'),
-      tab = tabHeader.querySelectorAll('.service-header-tab'),
-      tabContent = document.querySelectorAll('.service-tab');
+    const tabHeader = document.querySelector(".service-header"),
+      tab = tabHeader.querySelectorAll(".service-header-tab"),
+      tabContent = document.querySelectorAll(".service-tab");
 
     const toggleTabContent = (index) => {
       for (let i = 0; i < tabContent.length; i++) {
         if (index === i) {
-          tab[i].classList.add('active'); // кнопка станет активной
-          tabContent[i].classList.remove('d-none'); // если таб соответствует индексу, то отоброжаем
+          tab[i].classList.add("active"); // кнопка станет активной
+          tabContent[i].classList.remove("d-none"); // если таб соответствует индексу, то отоброжаем
         } else {
-          tab[i].classList.remove('active'); // кнопка перестанет быть активной
-          tabContent[i].classList.add('d-none'); // если таб не соответствует индексу, скрываем
+          tab[i].classList.remove("active"); // кнопка перестанет быть активной
+          tabContent[i].classList.add("d-none"); // если таб не соответствует индексу, скрываем
         }
       }
     };
 
-    tabHeader.addEventListener('click', (event) => {
+    tabHeader.addEventListener("click", (event) => {
       let target = event.target;
-      target = target.closest('.service-header-tab');
+      target = target.closest(".service-header-tab");
       /* Проверит наличие класса в таргет
       и если не найдет поднимется выше к родителю, если найдет то запишет в таргет родителя.
       если не найдет поднимется еще выше, если нигде не найдет вернет Null */
 
-      if (target) { //если target !== Null
-        tab.forEach((item, i) => { //Цикл проверки на какой таб мы тыкнули 
+      if (target) {
+        //если target !== Null
+        tab.forEach((item, i) => {
+          //Цикл проверки на какой таб мы тыкнули
           if (item === target) {
             toggleTabContent(i); // передаем индекс таба
           }
@@ -185,13 +186,113 @@ window.addEventListener("DOMContentLoaded", function () {
   };
   tabs();
 
+  // слайдер
 
+  const slider = () => {
+    const slider = document.querySelector(".portfolio-content"),
+      slide = document.querySelectorAll(".portfolio-item"),
+      btn = document.querySelectorAll(".portfolio-btn"),
+      ul = document.querySelector(".portfolio-dots"),
+      dot = [];
+    let currentSlide = 0,
+      interval;
 
+    //Добавляем точки
+    const dotAdd = () => {
+      slide.forEach((elem, index) => {
+        dot[index] = document.createElement("li");
+        ul.appendChild(dot[index]);
+        dot[index].classList.add("dot");
+      });
+      dot[0].classList.add("dot-active");
+    };
+    dotAdd();
 
+    const prevSlide = (elem, index, strClass) => {
+      elem[index].classList.remove(strClass);
+    };
 
+    const nextSlide = (elem, index, strClass) => {
+      elem[index].classList.add(strClass);
+    };
 
+    const autoPlaySlide = () => {
+      prevSlide(slide, currentSlide, "portfolio-item-active");
+      prevSlide(dot, currentSlide, "dot-active");
+      currentSlide++;
+      if (currentSlide >= slide.length) {
+        currentSlide = 0;
+      }
+      nextSlide(slide, currentSlide, "portfolio-item-active");
+      nextSlide(dot, currentSlide, "dot-active");
+    };
 
+    const startSlide = (time = 3000) => {
+      //значение по умолчанию 3 сек
+      interval = setInterval(autoPlaySlide, time);
+    };
 
+    const stopSlide = () => {
+      clearInterval(interval);
+    };
 
+    slider.addEventListener("click", (event) => {
+      event.preventDefault();
+      let target = event.target;
 
+      //Фильтр чтобы клик срабатывал только от кнопок и точек
+      if (!target.matches(".portfolio-btn, .dot")) {
+        return;
+      }
+
+      prevSlide(slide, currentSlide, "portfolio-item-active");
+      prevSlide(dot, currentSlide, "dot-active");
+
+      if (target.matches("#arrow-right")) {
+        //если цель "стрелочка вправо"
+        currentSlide++;
+      } else if (target.matches("#arrow-left")) {
+        //если цель "стрелочка влево"
+        currentSlide--;
+      } else if (target.matches(".dot")) {
+        //если цель "точечки"
+        dot.forEach((elem, index) => {
+          // перебор всех точек чтоб узнать какая выбрана
+          if (elem === target) {
+            currentSlide = index;
+          }
+        });
+      }
+      //Чтобы слайдер зациклился
+      if (currentSlide >= slide.length) {
+        currentSlide = 0;
+      }
+      if (currentSlide < 0) {
+        currentSlide = slide.length - 1;
+      }
+      nextSlide(slide, currentSlide, "portfolio-item-active");
+      nextSlide(dot, currentSlide, "dot-active");
+    });
+
+    slider.addEventListener("mouseover", (event) => {
+      if (
+        event.target.matches(".portfolio-btn") ||
+        event.target.matches(".dot")
+      ) {
+        stopSlide();
+      }
+    });
+    slider.addEventListener("mouseout", (event) => {
+      if (
+        event.target.matches(".portfolio-btn") ||
+        event.target.matches(".dot")
+      ) {
+        startSlide(1500);
+      }
+    });
+
+    startSlide(1500);
+  };
+
+  slider();
 }); //Весь код пишем после загрузки страницы
