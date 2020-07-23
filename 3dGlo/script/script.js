@@ -456,30 +456,22 @@ window.addEventListener("DOMContentLoaded", function () {
     let formInput = document.querySelectorAll('input');
     const statusMessage = document.createElement('div'); // сюда выведем сообщение 
     statusMessage.style.cssText = 'font-size: 2rem;';
+    statusMessage.style.cssText = 'color: white;';
+
     const postData = (body) => {
-      return new Promise((resolve, reject) => {
-        const request = new XMLHttpRequest();
-        request.addEventListener('readystatechange', () => { //оповещение пользователя
-          if (request.readyState !== 4) {
-            return;
-          }
-          if (request.status === 200) {
-            resolve();
-          } else {
-            reject();
-
-          }
-        });
-        request.open('POST', 'server.php');
-        request.setRequestHeader('Content-Type', 'application/json');
-
-        request.send(JSON.stringify(body)); // отправляем их
+      return fetch('./server.php', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
       });
+
 
     };
 
     for (let i = 0; i < form.length; i++) {
-      statusMessage.style.cssText = 'color: white;';
+
       form[i].addEventListener('submit', (event) => {
         event.preventDefault();
         form[i].appendChild(statusMessage);
@@ -492,7 +484,11 @@ window.addEventListener("DOMContentLoaded", function () {
         });
 
         postData(body)
-          .then(() => {
+          .then((response) => {
+            if (response.status !== 200) {
+              throw new Error('Status network not 200');
+            }
+            console.log(response);
             statusMessage.textContent = succesMessage;
             formInput.forEach((elem) => {
               elem.value = '';
