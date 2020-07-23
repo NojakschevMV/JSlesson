@@ -69,7 +69,6 @@ window.addEventListener("DOMContentLoaded", function () {
       menu.classList.toggle("active-menu"); // toggle - удалить/добавить класс
 
       /* Пример взаимодействия с помощью стилей:
-
       if (!menu.style.transform || menu.style.transform === `translate(-100%)`){
         menu.style.transform = `translate(0)`;
       }else{
@@ -457,53 +456,55 @@ window.addEventListener("DOMContentLoaded", function () {
     let formInput = document.querySelectorAll('input');
     const statusMessage = document.createElement('div'); // сюда выведем сообщение 
     statusMessage.style.cssText = 'font-size: 2rem;';
+    const postData = (body) => {
+      return new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest();
+        request.addEventListener('readystatechange', () => { //оповещение пользователя
+          if (request.readyState !== 4) {
+            return;
+          }
+          if (request.status === 200) {
+            resolve();
+          } else {
+            reject();
 
-    const postData = (body, qutputData, errorData) => {
-      const request = new XMLHttpRequest();
-      request.addEventListener('readystatechange', () => { //оповещение пользователя
-        if (request.readyState !== 4) {
-          return;
-        }
-        if (request.status === 200) {
-          qutputData();
-          statusMessage.textContent = succesMessage;
-          formInput.forEach((elem) => {
-            elem.value = '';
-          });
-        } else {
-          errorData();
+          }
+        });
+        request.open('POST', 'server.php');
+        request.setRequestHeader('Content-Type', 'application/json');
 
-        }
+        request.send(JSON.stringify(body)); // отправляем их
       });
-      request.open('POST', 'server.php');
-      request.setRequestHeader('Content-Type', 'application/json');
 
-      request.send(JSON.stringify(body)); // отправляем их
     };
+
     for (let i = 0; i < form.length; i++) {
-      if (i === 2) {
-        statusMessage.style.cssText = 'color: white;';
-      }
+      statusMessage.style.cssText = 'color: white;';
       form[i].addEventListener('submit', (event) => {
         event.preventDefault();
         form[i].appendChild(statusMessage);
         statusMessage.textContent = loadMessage;
+        statusMessage.style.cssText = 'color: white;';
         const formData = new FormData(form[i]); // получаем данные с нашей формы
         let body = {};
         formData.forEach((val, key) => {
           body[key] = val;
         });
-        postData(body, () => {
-          statusMessage.textContent = succesMessage;
 
-        }, () => {
-          statusMessage.textContent = errorMessage;
-        });
+        postData(body)
+          .then(() => {
+            statusMessage.textContent = succesMessage;
+            formInput.forEach((elem) => {
+              elem.value = '';
+            });
+          })
+          .catch(() => {
+            statusMessage.textContent = errorMessage;
+          });
+
+
       });
-
     }
-
-
   };
   setForm();
 }); //Весь код пишем после загрузки страницы
